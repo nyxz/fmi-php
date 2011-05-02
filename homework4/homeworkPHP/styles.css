@@ -1,0 +1,95 @@
+body {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+#body_cont {
+    height: 860px;
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #000000;
+}
+
+#header {
+    color: #6c0000;
+    height: 120px;
+    width: 960px;
+    background-color: black;
+
+    border-radius:15px;
+    -webkit-border-radius:15px;
+
+    -moz-box-shadow: 0px 0px 20px #d20200; /* Firefox 3.6 and earlier */
+    -webkit-box-shadow: 0px 0px 20px #d20200; /* Safari */
+    box-shadow: 0px 0px 20px #d20200;
+}
+
+#header h1{
+    float: left;
+    margin: 10px;
+    padding: 0;
+}
+
+#log_error {
+    float: left;
+    margin: 10px 0px 10px 50px;
+    width: 300px;
+    height: 100px;
+}
+
+#login {
+    float: right;
+    margin: 10px;
+}
+
+
+#content {
+    margin-top: 50px;
+    width: 960px;
+    height: 630px;
+    background-image: url('bg.jpg');
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+
+    border-radius:15px;
+    -webkit-border-radius:15px;
+
+    -moz-box-shadow: 0px 0px 20px #d20200; /* Firefox 3.6 and earlier */
+    -webkit-box-shadow: 0px 0px 20px #d20200; /* Safari */
+    box-shadow: 0px 0px 20px #d20200;
+
+}
+
+#women {
+    margin-top: 200px;
+    margin-left: 20px;
+    float: left;
+    color: #ffffff;
+
+}
+#men {
+    margin-top: 200px;
+    margin-right: 20px;
+    float: right;
+    color: #ffffff;
+}
+
+#result {
+    margin: 0px 0px 10px 50px;
+    width: 300px;
+    height: 100px;
+}
+
+#result a, h3 {
+    text-decoration: none;
+    color: #d20200;
+}
+
+#table {
+    background-color: black;
+}
+
+#column {
+    width: 100px;
+}

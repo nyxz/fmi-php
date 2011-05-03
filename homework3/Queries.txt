@@ -1,0 +1,145 @@
+-- дава имената на всички книги
+
+SELECT NAME
+FROM BOOKS
+----------------------------------------
+
+-- изтрива първия ред след подреждането на 
+-- резултатите по големина на годината
+-- като се почва от най-малката
+
+DELETE FROM BOOKS
+ORDER BY YEAR
+LIMIT 1
+----------------------------------------
+
+-- обновява стойностите на годината като 
+-- добавя по 10 за всяка година в базата
+
+UPDATE BOOKS 
+SET YEAR = YEAR + 10
+----------------------------------------
+
+-- дава средната големина на книгите
+
+SELECT AVG( PAGES )
+FROM BOOKS
+----------------------------------------
+
+
+-- добавяне на колона frid в таблица books
+
+ALTER TABLE BOOKS
+ADD FRID INT;
+
+
+-- указване кой е foreign key-a в таблицата
+-- и къде сочи (в случая id на friends)
+-- така казваме че една книга може да е 
+-- само в един приятел
+
+ALTER TABLE BOOKS 
+ADD CONSTRAINT friend_fk 
+FOREIGN KEY (FRID) 
+REFERENCES FRIENDS(ID);
+-----------------------------------------
+
+-- запълваме данните за FRID (чрез менюто на phpmyadmin)
+
+UPDATE `library2`.`books` SET `FRID` = '8' WHERE `books`.`id` =1;
+UPDATE `library2`.`books` SET `FRID` = '8' WHERE `books`.`id` =2;
+UPDATE `library2`.`books` SET `FRID` = '11' WHERE `books`.`id` =3;
+UPDATE `library2`.`books` SET `FRID` = '10' WHERE `books`.`id` =5;
+UPDATE `library2`.`books` SET `FRID` = '9' WHERE `books`.`id` =6;
+UPDATE `library2`.`books` SET `FRID` = '12' WHERE `books`.`id` =7;
+UPDATE `library2`.`books` SET `FRID` = '9' WHERE `books`.`id` =8;
+UPDATE `library2`.`books` SET `FRID` = '11' WHERE `books`.`id` =9;
+------------------------------------------
+
+-- Заявка показваща всяка книга в кой приятел се намира. 
+-- Показвайки само книгите, които са дадени
+
+SELECT TITLE, FIRSTNAME, LASTNAME
+FROM BOOKS RIGHT JOIN FRIENDS
+ON FRIENDS.ID = FRID
+------------------------------------------
+
+-- заявка за книгите, които не са дадени
+
+SELECT ID, TITLE 
+FROM BOOKS
+WHERE FRID IS NULL
+------------------------------------------
+
+-- Заявка показваща всички книги. Информация дали са 
+-- дадени на някой приятел и NULL запис ако книгата 
+-- не е дадена на приятел.
+
+SELECT TITLE, FIRSTNAME, LASTNAME
+FROM BOOKS LEFT JOIN FRIENDS 
+ON FRIENDS.ID = FRID
+
+
+-- изтриваме foreign key-a след като
+-- сме премахнали връзката между таблиците
+
+ALTER TABLE BOOKS 
+DROP FRID 
+-----------------------------------------
+
+
+
+
+
+№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№
+
+-- създаваме таблица в която ще се включват
+-- праймъри ключовете на двете таблици
+
+CREATE TABLE BOOKSIN (
+BOOKS_ID_FK INT,
+FRIENDS_ID_FK INT
+)
+
+-- указваме foreign key-овете
+
+ALTER TABLE BOOKSIN
+ADD FOREIGN KEY (BOOKS_ID_FK) REFERENCES BOOKS(ID);
+
+
+ALTER TABLE BOOKSIN
+ADD FOREIGN KEY (FRIENDS_ID_FK) REFERENCES FRIENDS(ID);
+
+-- пълним таблицата booksin с 15 записа
+
+INSERT INTO BOOKSIN (BOOKS_ID_FK, FRIENDS_ID_FK) 
+VALUES ('7', '11'), ('10', '11'), ('9', '10'), ('10', '10'), 
+('2', '12'), ('7', '8'), ('9', '10'), ('2', '8'), ('4', '11'), 
+('1', '9'), ('5', '9'), ('6', '11'), ('5', '9'), ('3', '11'), ('5', '8');
+
+
+-- заяка, която показва данни за приятел прочел най – много книги.
+
+SELECT ID, FIRSTNAME, LASTNAME, COUNT( FRIENDS_ID_FK ) AS 'BOOKS_READ'
+FROM FRIENDS JOIN BOOKSIN ON ID = FRIENDS_ID_FK
+GROUP BY ID
+HAVING COUNT( FRIENDS_ID_FK ) >= ALL (
+
+	SELECT COUNT( BI.FRIENDS_ID_FK )
+	FROM BOOKSIN AS BI
+	GROUP BY BI.FRIENDS_ID_FK
+)
+
+-- заявка, която показва коя книга е била прочетена най – малко пъти.
+
+SELECT ID, TITLE, COUNT( BOOKS_ID_FK ) AS 'TIMES_READ'
+FROM BOOKS
+JOIN BOOKSIN ON ID = BOOKS_ID_FK
+GROUP BY ID
+HAVING COUNT( BOOKS_ID_FK ) <= ALL (
+
+	SELECT COUNT( BI.BOOKS_ID_FK )
+	FROM BOOKSIN AS BI
+	GROUP BY BI.BOOKS_ID_FK
+	)
+

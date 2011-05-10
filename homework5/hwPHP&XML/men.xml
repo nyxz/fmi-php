@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<men>
+<gentlemen><username>admin</username><password>0192023a7bbd73250516f069df18b500</password><name>admin</name><salary>$9000</salary><owner_of>a:3:{i:0;s:3:"car";i:1;s:5:"villa";i:2;s:5:"yacht";}</owner_of><height>180</height></gentlemen>
+<gentlemen><username>maistora</username><password>9623bbee419ab513c500dc2467a6071f</password><name>maistora</name><salary>9999</salary><owner_of>a:3:{i:0;s:3:"car";i:1;s:5:"villa";i:2;s:5:"yacht";}</owner_of><height>180</height></gentlemen></men>
